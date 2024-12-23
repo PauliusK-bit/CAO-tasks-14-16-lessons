@@ -209,3 +209,127 @@ console.log(car.information());
 
 const bicycle = new Bicycle("Trek", "Marlin", true);
 console.log(bicycle.information());
+
+// Užduotys su OOP
+// Knygos klasė
+// lengvas
+
+// Sukurkite Book klasę su savybėmis title, author ir year. Pridėkite metodą getSummary(), kuris grąžina santrauką apie knygą.
+
+// Inicializacijos ir naudojimo pavyzdys:
+
+class Book {
+  constructor(title, author, year) {
+    this.title = title;
+    this.author = author;
+    this.year = year;
+  }
+
+  getSummary() {
+    return `${this.title} by ${this.author} published in ${this.year}`;
+  }
+}
+
+const book1 = new Book("Book Title", "Author Name", "2023");
+console.log(book1.getSummary());
+
+// Muzikos studentas
+// lengvas
+
+// Sukurkite klasę MusicStudent, kuri saugo informaciją apie muzikos mokyklos studentus. Studentas turi name (vardas), instrument (muzikos instrumentas, kurį jis mokosi groti) ir level (lygis, pvz., pradedantysis, pažengęs). Pridėkite metodą practice, kuris didina studento lygį. Pagal nutylėjimas studento lygis turėtų būti "beginner".
+
+class MusicStudent {
+  constructor(name, instrument, level = "beginner") {
+    this.name = name;
+    this.instrument = instrument;
+    this.level = level;
+  }
+  practice() {
+    if (this.level === "beginner") {
+      this.level = "intermediate";
+    } else if (this.level === "intermediate") {
+      this.level = "advanced";
+    }
+  }
+}
+
+const student = new MusicStudent("Anna", "piano");
+student.practice();
+console.log(`${student.name}, ${student.instrument}, ${student.level}`);
+
+// Prekių krepšelis
+// vidutinis
+
+// Sukurkite ShoppingCart klasę, kuri gali pridėti prekes (addItem), pašalinti prekes (removeItem) ir apskaičiuoti bendrą kainą (calculateTotal). Prekės yra objektai su savybėmis name ir price.
+
+class ShoppingCart {
+  constructor() {
+    this.items = [];
+  }
+
+  addItem(item) {
+    this.items.push(item);
+  }
+
+  removeItem(itemName) {
+    this.items = this.items.filter((item) => item.name !== itemName);
+  }
+
+  calculateTotal() {
+    return this.items.reduce((total, item) => total + item.price, 0);
+  }
+}
+
+const cart = new ShoppingCart();
+cart.addItem({ name: "Apple", price: 0.99 });
+cart.addItem({ name: "Bread", price: 1.29 });
+console.log(cart.calculateTotal());
+cart.removeItem("Apple");
+console.log(cart.calculateTotal());
+
+// Kino teatro vietų rezervavimas
+// sudėtingas
+
+// Sukurkite MovieTheater klasę, skirtą valdyti kino teatro sėdimų vietų rezervacijoms. Klasė turi turėti šias savybes: rows (eilučių skaičius) ir seatsPerRow (vietų skaičius eilutėje). Vietos turi būti saugomos dvimačiame masyve, kur kiekviena vieta gali būti true (užimta) arba false (laisva). Taip pat klasėje turi būti šie metodai:
+
+// bookSeat(row, seat) - metodas vietos rezervavimui. Jei vieta jau užimta, turi būti grąžinamas pranešimas apie tai.
+
+// cancelBooking(row, seat) - metodas rezervacijos atšaukimui. Jei vieta nebuvo rezervuota, turi būti grąžinamas atitinkamas pranešimas.
+
+// checkAvailability(row, seat) - metodas, grąžinantis true arba false, priklausomai nuo to, ar vieta yra laisva.
+
+class MovieTheater {
+  constructor(rows, seatsPerRow) {
+    this.seats = Array.from({ length: rows }, () =>
+      Array(seatsPerRow).fill(false)
+    );
+  }
+
+  bookSeat(row, seat) {
+    if (!this.seats[row][seat]) {
+      this.seats[row][seat] = true;
+      console.log(`Seat booked at row ${row}, seat ${seat}`);
+    } else {
+      console.log("Seat already booked");
+    }
+  }
+
+  cancelBooking(row, seat) {
+    if (this.seats[row][seat]) {
+      this.seats[row][seat] = false;
+      console.log(`Booking canceled at row ${row}, seat ${seat}`);
+    } else {
+      console.log("Seat not booked");
+    }
+  }
+
+  checkAvailability(row, seat) {
+    return !this.seats[row][seat];
+  }
+}
+
+const theater = new MovieTheater(5, 5);
+theater.bookSeat(2, 3);
+console.log(theater.checkAvailability(2, 3));
+theater.cancelBooking(2, 3);
+console.log(theater.checkAvailability(2, 3));
